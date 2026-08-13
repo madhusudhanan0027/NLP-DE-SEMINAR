@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discourse Segmentation — NLP Seminar</title>
+<meta name="description" content="An interactive seminar presentation on Discourse Segmentation in Natural Language Processing.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ BACKGROUND LAYERS ============ -->
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+<div id="webgl-fallback" class="webgl-fallback" aria-hidden="true"></div>
+<canvas id="scene-canvas" aria-hidden="true"></canvas>
+
+<!-- ============ SKIP LINK ============ -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header class="topbar" id="topbar">
+  <div class="topbar__brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-text">DISCOURSE<span class="brand-text--accent">.SEG</span></span>
+  </div>
+
+  <nav class="topbar__nav" id="primary-nav" aria-label="Section navigation">
+    <a href="#hero" data-idx="0" class="nav-link">Home</a>
+    <a href="#intro" data-idx="1" class="nav-link">Intro</a>
+    <a href="#concept" data-idx="2" class="nav-link">Core&nbsp;Concept</a>
+    <a href="#importance" data-idx="3" class="nav-link">Why&nbsp;It&nbsp;Matters</a>
+    <a href="#how" data-idx="4" class="nav-link">How&nbsp;It&nbsp;Works</a>
+    <a href="#features" data-idx="5" class="nav-link">Features</a>
+    <a href="#techniques" data-idx="6" class="nav-link">Techniques</a>
+    <a href="#example" data-idx="7" class="nav-link">Example</a>
+    <a href="#applications" data-idx="8" class="nav-link">Applications</a>
+    <a href="#conclusion" data-idx="9" class="nav-link">Conclusion</a>
+  </nav>
+
+  <div class="topbar__controls">
+    <span class="section-counter" id="section-counter">00 / 09</span>
+    <button class="icon-btn" id="notes-toggle" aria-pressed="false" title="Presenter notes (N)">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M5 3h11l3 3v15H5V3zm10 1.5V8h3.5L15 4.5zM7 11h10v1.5H7V11zm0 4h10v1.5H7V15zm0-8h6v1.5H7V7z"/></svg>
+      <span>Notes</span>
+    </button>
+    <button class="icon-btn" id="present-toggle" title="Presentation mode (F)">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"/></svg>
+      <span>Present</span>
+    </button>
+  </div>
+
+  <div class="progress-rail" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+</header>
+
+<!-- ============ PRESENTER NOTES PANEL ============ -->
+<aside class="notes-panel" id="notes-panel" aria-hidden="true">
+  <div class="notes-panel__head">
+    <span>PRESENTER NOTES</span>
+    <button class="icon-btn icon-btn--ghost" id="notes-close" aria-label="Close presenter notes">✕</button>
+  </div>
+  <div class="notes-panel__body" id="notes-body">
+    <p class="notes-empty">Scroll through a section to see speaking notes here.</p>
+  </div>
+</aside>
+
+<!-- ============ PRESENTATION HUD ============ -->
+<div class="present-hud" id="present-hud" aria-hidden="true">
+  <span class="present-hud__hint"><kbd>↓</kbd> next &nbsp; <kbd>↑</kbd> prev &nbsp; <kbd>N</kbd> notes &nbsp; <kbd>F</kbd> exit</span>
+</div>
+
+<main id="main">
+
+<!-- ============================================================ -->
+<!-- SECTION 0 — HERO -->
+<!-- ============================================================ -->
+<section class="section hero" id="hero" data-section="0" data-notes="Discourse segmentation is the task of dividing continuous language into meaningful units. In this seminar, I'll walk through what discourse is, how systems find the boundaries between ideas, the main techniques used, and where this shows up in real NLP applications like summarization and chatbots.">
+  <div class="hero__inner">
+    <p class="eyebrow reveal-up">NATURAL LANGUAGE PROCESSING • SEMINAR</p>
+    <h1 class="hero__title">
+      <span class="reveal-line"><span class="reveal-word">DISCOURSE</span></span>
+      <span class="reveal-line"><span class="reveal-word reveal-word--accent">SEGMENTATION</span></span>
+    </h1>
+    <p class="hero__subtitle reveal-up">“Giving Structure to Human Language”</p>
+    <p class="hero__lede reveal-up">Discourse segmentation is the process of dividing continuous language into meaningful units so that NLP systems can better understand how ideas are organized.</p>
+
+    <div class="hero__cta reveal-up">
+      <a href="#intro" class="btn btn--primary" data-scroll-target="#intro">
+        Explore Topic
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8-8-8z"/></svg>
+      </a>
+    </div>
+
+    <dl class="hero__meta reveal-up">
+      <div><dt>Presented By</dt><dd>[NAME]</dd></div>
+      <div><dt>Register Number</dt><dd>[REGISTER NUMBER]</dd></div>
+      <div><dt>Department</dt><dd>[DEPARTMENT]</dd></div>
+      <div><dt>College</dt><dd>[COLLEGE]</dd></div>
+    </dl>
+  </div>
+  <div class="hero__scrollcue" aria-hidden="true"><span></span>Scroll</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 1 — INTRODUCTION -->
+<!-- ============================================================ -->
+<section class="section" id="intro" data-section="1" data-notes="Discourse is connected language that communicates a larger meaning. It can be a conversation, paragraph, article, or dialogue. A single sentence carries information, but discourse is what connects several sentences into one coherent idea. In NLP, understanding discourse helps systems move beyond individual sentences and examine how ideas connect with one another.">
+  <div class="section__head">
+    <span class="section__num">01</span>
+    <h2 class="section__title">What Is Discourse?</h2>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel reveal-up">
+      <p class="panel__text">Discourse refers to connected language that forms a meaningful communication. It can appear as a conversation, dialogue, paragraph, article, speech, or other connected form of communication.</p>
+      <p class="panel__text">A sentence gives information, but discourse provides connected meaning across multiple sentences or utterances.</p>
+      <button class="link-more" data-more="more-intro">More details <span>+</span></button>
+      <div class="more-panel" id="more-intro" hidden>
+        <p>Linguists study discourse to understand how speakers and writers link ideas together using reference, order, and connecting words &mdash; not just what each sentence says on its own, but how sentences relate to the ones around them.</p>
+      </div>
+    </div>
+
+    <div class="panel panel--hierarchy reveal-up">
+      <p class="panel__label">Visual hierarchy</p>
+      <ol class="hierarchy" id="hierarchy-list">
+        <li><span class="hierarchy__tag">WORD</span></li>
+        <li><span class="hierarchy__tag">SENTENCE</span></li>
+        <li><span class="hierarchy__tag">DISCOURSE UNIT</span></li>
+        <li><span class="hierarchy__tag hierarchy__tag--accent">DISCOURSE</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="panel panel--example reveal-up">
+    <p class="panel__label">Example — a short discourse</p>
+    <div class="example-lines">
+      <p class="example-line">“I went to college yesterday.</p>
+      <p class="example-line">The seminar was interesting.</p>
+      <p class="example-line">I learned about NLP.”</p>
+    </div>
+    <p class="panel__caption">Three separate sentences — but read together, they form one connected discourse about a single event.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2 — CORE CONCEPT (signature animation) -->
+<!-- ============================================================ -->
+<section class="section section--dark" id="concept" data-section="2" data-notes="Discourse segmentation is the task of identifying the boundaries that divide a text or conversation into meaningful discourse units. The system has to decide where one meaningful unit ends and the next begins, and how the connected pieces of language should be organized. It's not about splitting text randomly — it's about finding boundaries that actually mean something.">
+  <div class="section__head">
+    <span class="section__num">02</span>
+    <h2 class="section__title">What Is Discourse Segmentation?</h2>
+  </div>
+
+  <p class="lede panel reveal-up">Discourse segmentation is the task of identifying boundaries that divide a text or conversation into meaningful discourse units.</p>
+
+  <ul class="bullet-row reveal-up">
+    <li>Where one meaningful unit <strong>ends</strong></li>
+    <li>Where the next unit <strong>begins</strong></li>
+    <li>How connected pieces of language should be <strong>organized</strong></li>
+  </ul>
+
+  <div class="segmenter-stage" id="segmenter-stage">
+    <p class="segmenter-source" id="segmenter-source">I went to college yesterday. The seminar was amazing. I learned about NLP.</p>
+    <div class="segmenter-units" id="segmenter-units" aria-hidden="true">
+      <div class="seg-unit">
+        <span class="seg-unit__label">DISCOURSE UNIT 1</span>
+        <p class="seg-unit__text">I went to college yesterday.</p>
+      </div>
+      <div class="seg-unit">
+        <span class="seg-unit__label">DISCOURSE UNIT 2</span>
+        <p class="seg-unit__text">The seminar was amazing.</p>
+      </div>
+      <div class="seg-unit">
+        <span class="seg-unit__label">DISCOURSE UNIT 3</span>
+        <p class="seg-unit__text">I learned about NLP.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="callout reveal-up">Segmentation does not simply split text randomly. It attempts to identify meaningful boundaries.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 3 — IMPORTANCE -->
+<!-- ============================================================ -->
+<section class="section" id="importance" data-section="3" data-notes="NLP systems often need to understand how information is structured before they can perform higher-level language tasks. Segmentation feeds into summarization, translation, question answering, chatbots, and information extraction — in each case, the system first needs to know where one idea ends and another begins.">
+  <div class="section__head">
+    <span class="section__num">03</span>
+    <h2 class="section__title">Why Do We Need It?</h2>
+  </div>
+
+  <p class="lede reveal-up">NLP systems often need to understand how information is structured before performing higher-level language tasks.</p>
+
+  <div class="card-grid card-grid--5">
+    <article class="card reveal-up">
+      <span class="card__icon" data-icon="summarize"></span>
+      <h3 class="card__title">Text Summarization</h3>
+      <p class="card__text">Identifies meaningful units that can be selected and combined into a summary.</p>
+    </article>
+    <article class="card reveal-up">
+      <span class="card__icon" data-icon="translate"></span>
+      <h3 class="card__title">Machine Translation</h3>
+      <p class="card__text">Helps systems preserve the organization and relationships present in the source text.</p>
+    </article>
+    <article class="card reveal-up">
+      <span class="card__icon" data-icon="qa"></span>
+      <h3 class="card__title">Question Answering</h3>
+      <p class="card__text">Helps identify relevant sections of a document or conversation.</p>
+    </article>
+    <article class="card reveal-up">
+      <span class="card__icon" data-icon="chat"></span>
+      <h3 class="card__title">Chatbots</h3>
+      <p class="card__text">Supports better understanding of conversational turns and topic changes.</p>
+    </article>
+    <article class="card reveal-up">
+      <span class="card__icon" data-icon="extract"></span>
+      <h3 class="card__title">Information Extraction</h3>
+      <p class="card__text">Helps organize information contained in connected text.</p>
+    </article>
+  </div>
+
+  <div class="flow-strip reveal-up">
+    <span class="flow-step">RAW TEXT</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">STRUCTURED UNITS</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step flow-step--accent">BETTER LANGUAGE PROCESSING</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4 — HOW IT WORKS -->
+<!-- ============================================================ -->
+<section class="section section--dark" id="how" data-section="4" data-notes="A typical segmentation pipeline starts with raw text, then does preprocessing like tokenization and sentence handling. Next it analyzes features — punctuation, connectives, syntax, semantics, context. Then it predicts where the boundaries actually are, and finally the text comes out divided into discourse segments. Click each stage to see more.">
+  <div class="section__head">
+    <span class="section__num">04</span>
+    <h2 class="section__title">How Does Segmentation Work?</h2>
+  </div>
+
+  <div class="pipeline" id="pipeline">
+    <button class="pipeline__stage reveal-up" data-stage="1">
+      <span class="pipeline__index">STEP 1</span>
+      <span class="pipeline__name">Raw Text</span>
+      <span class="pipeline__hint">Input text or conversation.</span>
+    </button>
+    <span class="pipeline__connector" aria-hidden="true"></span>
+
+    <button class="pipeline__stage reveal-up" data-stage="2">
+      <span class="pipeline__index">STEP 2</span>
+      <span class="pipeline__name">Preprocessing</span>
+      <span class="pipeline__hint">Tokenization &amp; sentence handling.</span>
+    </button>
+    <span class="pipeline__connector" aria-hidden="true"></span>
+
+    <button class="pipeline__stage reveal-up" data-stage="3">
+      <span class="pipeline__index">STEP 3</span>
+      <span class="pipeline__name">Feature Analysis</span>
+      <span class="pipeline__hint">Punctuation, connectives, syntax.</span>
+    </button>
+    <span class="pipeline__connector" aria-hidden="true"></span>
+
+    <button class="pipeline__stage reveal-up" data-stage="4">
+      <span class="pipeline__index">STEP 4</span>
+      <span class="pipeline__name">Boundary Detection</span>
+      <span class="pipeline__hint">Predicting where units divide.</span>
+    </button>
+    <span class="pipeline__connector" aria-hidden="true"></span>
+
+    <button class="pipeline__stage reveal-up" data-stage="5">
+      <span class="pipeline__index">STEP 5</span>
+      <span class="pipeline__name">Discourse Segments</span>
+      <span class="pipeline__hint">Text divided into meaningful units.</span>
+    </button>
+  </div>
+
+  <div class="stage-detail" id="stage-detail" hidden>
+    <button class="stage-detail__close" id="stage-detail-close" aria-label="Close">✕</button>
+    <p class="stage-detail__num" id="stage-detail-num"></p>
+    <h3 class="stage-detail__title" id="stage-detail-title"></h3>
+    <p class="stage-detail__text" id="stage-detail-text"></p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5 — FEATURES -->
+<!-- ============================================================ -->
+<section class="section" id="features" data-section="5" data-notes="Segmentation systems don't rely on one single clue — they combine several linguistic signals: punctuation, discourse connectives like 'however' or 'therefore', lexical patterns, syntax, semantics, and surrounding context. No single feature always determines a boundary on its own; it's the combination that matters.">
+  <div class="section__head">
+    <span class="section__num">05</span>
+    <h2 class="section__title">What Signals Help?</h2>
+  </div>
+
+  <p class="lede reveal-up">Segmentation systems can use multiple linguistic signals together — no single signal always determines a boundary on its own.</p>
+
+  <div class="card-grid card-grid--6">
+    <article class="card card--flip reveal-up" tabindex="0">
+      <h3 class="card__title">Punctuation</h3>
+      <p class="card__text">Periods, commas, question marks, and other punctuation can provide clues about boundaries.</p>
+    </article>
+    <article class="card card--flip reveal-up" tabindex="0">
+      <h3 class="card__title">Discourse Connectives</h3>
+      <p class="card__text">Words such as <em>however</em>, <em>therefore</em>, <em>because</em>, and <em>so</em> can indicate relationships between ideas.</p>
+    </article>
+    <article class="card card--flip reveal-up" tabindex="0">
+      <h3 class="card__title">Lexical Information</h3>
+      <p class="card__text">Words and vocabulary patterns can help identify changes or continuity in topics.</p>
+    </article>
+    <article class="card card--flip reveal-up" tabindex="0">
+      <h3 class="card__title">Syntactic Information</h3>
+      <p class="card__text">Sentence structure and grammatical relationships provide useful signals.</p>
+    </article>
+    <article class="card card--flip reveal-up" tabindex="0">
+      <h3 class="card__title">Semantic Information</h3>
+      <p class="card__text">Meaning and relationships between ideas help determine whether units belong together.</p>
+    </article>
+    <article class="card card--flip reveal-up" tabindex="0">
+      <h3 class="card__title">Context</h3>
+      <p class="card__text">Surrounding sentences or utterances can provide information needed to interpret a possible boundary.</p>
+    </article>
+  </div>
+
+  <div class="flow-strip flow-strip--converge reveal-up">
+    <span class="flow-step">MULTIPLE SIGNALS</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step flow-step--accent">BOUNDARY DECISION</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 6 — TECHNIQUES -->
+<!-- ============================================================ -->
+<section class="section section--dark" id="techniques" data-section="6" data-notes="There are three broad families of approaches. Rule-based systems use hand-written linguistic rules and cue phrases — simple and interpretable, but they struggle with variation. Machine learning approaches learn patterns from labeled data using features — more flexible, but they need labeled training data. Deep learning approaches use neural networks like RNNs and Transformers to learn complex, context-aware representations — powerful, but data-hungry and less interpretable.">
+  <div class="section__head">
+    <span class="section__num">06</span>
+    <h2 class="section__title">Major Approaches</h2>
+  </div>
+
+  <div class="approach-grid">
+    <article class="approach reveal-up">
+      <span class="approach__num">1</span>
+      <h3 class="approach__title">Rule-Based</h3>
+      <p class="approach__text">Rule-based systems use predefined linguistic rules, punctuation patterns, cue phrases, and structural information to identify likely boundaries.</p>
+      <div class="approach__cols">
+        <div><p class="approach__label approach__label--good">Advantages</p><ul><li>Simple</li><li>Interpretable</li><li>Easy to design for specific patterns</li></ul></div>
+        <div><p class="approach__label approach__label--bad">Limitations</p><ul><li>Depends heavily on hand-crafted rules</li><li>Can struggle with variation and ambiguity</li></ul></div>
+      </div>
+    </article>
+
+    <article class="approach reveal-up">
+      <span class="approach__num">2</span>
+      <h3 class="approach__title">Machine Learning</h3>
+      <p class="approach__text">Machine learning approaches learn segmentation patterns from labeled examples and use linguistic features to classify likely discourse boundaries.</p>
+      <div class="approach__cols">
+        <div><p class="approach__label approach__label--good">Advantages</p><ul><li>Learns from data</li><li>More flexible than manually written rules</li></ul></div>
+        <div><p class="approach__label approach__label--bad">Limitations</p><ul><li>Requires labeled training data</li><li>Performance depends on feature quality</li></ul></div>
+      </div>
+    </article>
+
+    <article class="approach reveal-up">
+      <span class="approach__num">3</span>
+      <h3 class="approach__title">Deep Learning</h3>
+      <p class="approach__text">Deep learning approaches use neural networks to learn complex representations from language and context.</p>
+      <p class="approach__examples">Conceptually includes: Recurrent Neural Networks · Transformers · Context-aware neural models</p>
+      <div class="approach__cols">
+        <div><p class="approach__label approach__label--good">Advantages</p><ul><li>Learns complex patterns</li><li>Can use broader context</li></ul></div>
+        <div><p class="approach__label approach__label--bad">Limitations</p><ul><li>Requires substantial data and computation</li><li>Less interpretable than simple rules</li></ul></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="flow-strip reveal-up">
+    <span class="flow-step">RULE-BASED</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">MACHINE LEARNING</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step flow-step--accent">DEEP LEARNING</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 7 — EXAMPLE -->
+<!-- ============================================================ -->
+<section class="section" id="example" data-section="7" data-notes="Take the sentence: I wanted to attend the workshop. However, I had an exam. So I joined the recording later. The words 'however' and 'so' are discourse connectives. However signals contrast, and so signals a result. In the second example, 'therefore' marks a cause-and-result relationship between studying and feeling confident.">
+  <div class="section__head">
+    <span class="section__num">07</span>
+    <h2 class="section__title">See It In Action</h2>
+  </div>
+
+  <div class="stream-stage panel" id="stream-stage">
+    <p class="stream-text" id="stream-text">I wanted to attend the workshop. However, I had an exam. So I joined the recording later.</p>
+    <div class="stream-segments" id="stream-segments" aria-hidden="true">
+      <div class="stream-seg"><span class="stream-seg__label">SEGMENT 1</span><p>I wanted to attend the workshop.</p></div>
+      <div class="stream-seg"><span class="stream-seg__label">SEGMENT 2</span><p><span class="connective">However</span>, I had an exam.</p></div>
+      <div class="stream-seg"><span class="stream-seg__label">SEGMENT 3</span><p><span class="connective">So</span> I joined the recording later.</p></div>
+    </div>
+  </div>
+
+  <div class="grid-2 reveal-up">
+    <div class="panel">
+      <p class="panel__label">Contrast</p>
+      <p class="panel__text"><span class="connective">However</span> indicates contrast — the exam works against the plan to attend.</p>
+    </div>
+    <div class="panel">
+      <p class="panel__label">Result</p>
+      <p class="panel__text"><span class="connective">So</span> can indicate a result or consequence that follows from what came before.</p>
+    </div>
+  </div>
+
+  <div class="flow-strip flow-strip--long reveal-up">
+    <span class="flow-step">TEXT</span><span class="flow-arrow">→</span>
+    <span class="flow-step">LINGUISTIC CUES</span><span class="flow-arrow">→</span>
+    <span class="flow-step">BOUNDARY DETECTION</span><span class="flow-arrow">→</span>
+    <span class="flow-step">SEGMENTS</span><span class="flow-arrow">→</span>
+    <span class="flow-step flow-step--accent">RELATIONSHIPS</span>
+  </div>
+
+  <div class="panel panel--example reveal-up">
+    <p class="panel__label">A second example</p>
+    <div class="example-lines">
+      <p class="example-line">I studied for the exam.</p>
+      <p class="example-line"><span class="connective">Therefore</span>, I felt confident.</p>
+    </div>
+    <span class="relationship-tag">CAUSE / RESULT</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 8 — APPLICATIONS & CHALLENGES -->
+<!-- ============================================================ -->
+<section class="section section--dark" id="applications" data-section="8" data-notes="Discourse structure is used across chatbots, summarization, translation, question answering, search, and dialogue systems. But it's not a solved problem — boundaries can be ambiguous, meaning can depend on context far away in the text, informal language like chat is noisy, documents can be long, domains differ, and spoken language adds pauses and repairs that don't appear in writing.">
+  <div class="section__head">
+    <span class="section__num">08</span>
+    <h2 class="section__title">Applications &amp; Challenges</h2>
+  </div>
+
+  <div class="split-panel">
+    <div class="split-panel__col">
+      <p class="panel__label">Applications</p>
+      <ul class="app-list">
+        <li><strong>Chatbots</strong> — tracking conversational turns and topic shifts.</li>
+        <li><strong>Text Summarization</strong> — selecting units worth condensing.</li>
+        <li><strong>Machine Translation</strong> — preserving structure across languages.</li>
+        <li><strong>Question Answering</strong> — locating the relevant unit to answer from.</li>
+        <li><strong>Search &amp; Document Analysis</strong> — organizing long documents into retrievable pieces.</li>
+        <li><strong>Dialogue Systems</strong> — following how a conversation's topic evolves.</li>
+      </ul>
+    </div>
+    <div class="split-panel__col">
+      <p class="panel__label panel__label--bad">Challenges</p>
+      <div class="challenge-list">
+        <details class="challenge"><summary>Ambiguous Boundaries</summary><p>Some boundaries are difficult to identify because the same sentence can support different interpretations.</p></details>
+        <details class="challenge"><summary>Context Dependence</summary><p>Understanding a boundary may require information from surrounding text.</p></details>
+        <details class="challenge"><summary>Informal Language</summary><p>Chat and social media language can be noisy, incomplete, or irregular.</p></details>
+        <details class="challenge"><summary>Long Documents</summary><p>Relationships may span multiple sentences or paragraphs.</p></details>
+        <details class="challenge"><summary>Different Domains</summary><p>Language structure can vary across academic, conversational, technical, and other domains.</p></details>
+        <details class="challenge"><summary>Spoken Language</summary><p>Speech can contain pauses, repairs, interruptions, and prosodic cues not directly represented in written text.</p></details>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-strip reveal-up">
+    <span class="flow-step">REAL-WORLD LANGUAGE</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step">AMBIGUITY</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step flow-step--accent">SEGMENTATION CHALLENGE</span>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 9 — CONCLUSION -->
+<!-- ============================================================ -->
+<section class="section conclusion" id="conclusion" data-section="9" data-notes="To summarize: discourse segmentation identifies meaningful boundaries, helps systems understand discourse structure, and supports downstream NLP applications. Looking ahead, this connects directly to context-aware NLP, Transformer-based models, large language models, conversational AI, and multimodal understanding. Before a machine can understand connected language, it must understand how the ideas are organized. Thank you.">
+  <div class="section__head">
+    <span class="section__num">09</span>
+    <h2 class="section__title">Conclusion</h2>
+  </div>
+
+  <div class="takeaway-grid reveal-up">
+    <div class="takeaway">
+      <span class="takeaway__verb">Identify</span>
+      <span class="takeaway__noun">Meaningful boundaries</span>
+    </div>
+    <div class="takeaway">
+      <span class="takeaway__verb">Understand</span>
+      <span class="takeaway__noun">Discourse structure</span>
+    </div>
+    <div class="takeaway">
+      <span class="takeaway__verb">Support</span>
+      <span class="takeaway__noun">NLP applications</span>
+    </div>
+  </div>
+
+  <p class="panel lede reveal-up">Discourse segmentation helps NLP systems organize continuous language into meaningful units. By identifying boundaries and using linguistic and contextual signals, it provides useful structure for downstream language understanding tasks.</p>
+
+  <div class="future-row reveal-up">
+    <span class="future-chip">Context-Aware NLP</span>
+    <span class="future-chip">Transformer-Based Approaches</span>
+    <span class="future-chip">Large Language Models</span>
+    <span class="future-chip">Conversational AI</span>
+    <span class="future-chip">Multimodal Understanding</span>
+  </div>
+
+  <blockquote class="final-statement reveal-up">
+    Before a machine can understand connected language,<br>
+    it must understand how the ideas are organized.
+  </blockquote>
+
+  <div class="closing reveal-up">
+    <h3 class="closing__title">DISCOURSE SEGMENTATION</h3>
+    <p class="closing__sub">STRUCTURING LANGUAGE FOR UNDERSTANDING</p>
+    <p class="closing__thanks">THANK YOU</p>
+    <dl class="hero__meta hero__meta--center">
+      <div><dt>Name</dt><dd>[NAME]</dd></div>
+      <div><dt>Register Number</dt><dd>[REGISTER NUMBER]</dd></div>
+      <div><dt>Department</dt><dd>[DEPARTMENT]</dd></div>
+      <div><dt>College</dt><dd>[COLLEGE]</dd></div>
+    </dl>
+  </div>
+</section>
+
+</main>
+
+<div class="reduced-motion-toggle">
+  <button id="motion-toggle" class="icon-btn icon-btn--ghost" aria-pressed="false" title="Reduce motion">
+    <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 2a7 7 0 110 14 7 7 0 010-14zm-1 3h2v6h-2V8zm0 8h2v2h-2v-2z"/></svg>
+  </button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/three-scene.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/presentation.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
